@@ -62,4 +62,4 @@ CrackMapExec smb 192.168.1.0/24
 
 Angry IP Scanner(https://angryip.org/download/)
 
-<figure><img src="../../.gitbook/assets/image (47).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (28).png" alt=""><figcaption></figcaption></figure>

@@ -84,7 +84,7 @@ LM hash加密流程为(以密码：P@ssW0rd!为例)
 
     拼接：921988BA001DC8E122C34254E51BFF62
 
-![](<../../.gitbook/assets/image (28).png>)![](<../../.gitbook/assets/image (13).png>)
+![](<../../.gitbook/assets/image (18).png>)![](<../../.gitbook/assets/image (30).png>)
 
 ### NTLM Hash 加密算法
 
@@ -110,7 +110,7 @@ NTLM Hash为提高安全性同时保证兼容性而设计的散列加密算法�
 
     500040007300730057003000720064002100 -> Md4加密 -> a8f33bee89eba84d289ab51248f1534b
 
-<figure><img src="../../.gitbook/assets/image (56).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (50).png" alt=""><figcaption></figcaption></figure>
 
 ### 系统层面的NTLM Hash
 
@@ -140,7 +140,7 @@ NTLM协议分NTLM v1 和NTLM v2两个版本，目前使用最多的为**NTLM v2*
 
 #### **工作组环境下的NTLM认证:**
 
-<figure><img src="../../.gitbook/assets/未命名文件 (3).png" alt=""><figcaption><p>工作组环境下的NTLM认证流程</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/未命名文件 (5).png" alt=""><figcaption><p>工作组环境下的NTLM认证流程</p></figcaption></figure>
 
 1. 当客户端需要访问服务器某个服务时，就需要**进行身份认证**，于是在客户端输入服务器的用户名与密码进行验证之后，就会**缓存服务器的密码NTLM Hash值**，然后客户端会**向服务端发送一个请求**，该请求**利用NTLM SSP**生成**NTLMSSP\_NEGOTIATE消息**，也就是**Type 1**协商消息
 2. 服务端接收到客户端发送过来的Type 1消息后，读取其中内容，并从中选择自己能接受的服务内容、加密等级、安全服务等，然后传**输给NTLM SSP**，得到**NTLMSSP\_CHALLENGE消息**，也就是**Type 2**质询消息，并将**Type 2消息发回给客户端**。在Type 2 消息中包含一个服务端生成的16位随机值，被称为**Challenge值**，**服务端会将该Challenge值进行缓存**
@@ -154,15 +154,15 @@ NTLM协议分NTLM v1 和NTLM v2两个版本，目前使用最多的为**NTLM v2*
 
 登录成功数据包如下：
 
-<figure><img src="../../.gitbook/assets/image (20).png" alt=""><figcaption><p>net use登录成功</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (7).png" alt=""><figcaption><p>net use登录成功</p></figcaption></figure>
 
 登录失败数据包如下：
 
-<figure><img src="../../.gitbook/assets/image (48).png" alt=""><figcaption><p>net use登录失败</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p>net use登录失败</p></figcaption></figure>
 
 NTLM认证的数据包都会放在GSS-Api里面，如图
 
-<figure><img src="../../.gitbook/assets/image (27).png" alt=""><figcaption><p>SMB认证包之一</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (6).png" alt=""><figcaption><p>SMB认证包之一</p></figcaption></figure>
 
 关于**GSS-API**(Generic Security Service Application Program Interface)，是一种统一的模式，为使用者提供与机制无关、平台无关、程序语言环境无关并且可移植的安全服务，让程序员编写应用程序时可以应用通用的安全机制。
 
@@ -172,43 +172,43 @@ SSPI是GSS-API一个专有变体，进行了扩展并具有许多特定于WIndow
 
 **NTLM认证前4个包：**
 
-<figure><img src="../../.gitbook/assets/image (15).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (34).png" alt=""><figcaption></figcaption></figure>
 
 前4个包主要为协议协商的一些信息，重点为**Security mode**(安全模式)，即如图下，Security mode下**Signing enabled 为True**，**Signing required为False**，表面当前客户端虽然支持签名，但是协商不签名(工作组环境默认均不签名)
 
-<figure><img src="../../.gitbook/assets/image (45).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 **第五个包NTLMSSP\_NEGOTIATE 即Type1：**
 
-<figure><img src="../../.gitbook/assets/image (35).png" alt=""><figcaption><p>NTLMSSP_NEGOTIATE</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (27).png" alt=""><figcaption><p>NTLMSSP_NEGOTIATE</p></figcaption></figure>
 
 用于从客户端发送到服务端启动NTLM身份验证的包，主要目的是通过flag指示支持的选择来验证基本规则，Type1 NEGOTIATE包核心部分如下：
 
-<figure><img src="../../.gitbook/assets/image (7).png" alt=""><figcaption><p>Type1 NEGOTIATE</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (11).png" alt=""><figcaption><p>Type1 NEGOTIATE</p></figcaption></figure>
 
 Negotiate Flags字段为需要协商的flag标志
 
-<figure><img src="../../.gitbook/assets/image (23).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (17).png" alt=""><figcaption></figcaption></figure>
 
 **第六个包NTLMSSP\_CHALLENGE 即Type2**
 
-<figure><img src="../../.gitbook/assets/image (39).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (35).png" alt=""><figcaption></figcaption></figure>
 
 第六个包NTLMSSP\_CHALLENGE为服务端发送给客户端的数据包，包含服务器支持和同意的功能列表，核心部分内容如下：
 
-<figure><img src="../../.gitbook/assets/image (46).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (37).png" alt=""><figcaption></figcaption></figure>
 
 NTLMSSP\_CHALLENGE Type 2消息中包含**Challenge**的值，**在NTLM v2版本中，Challenge值为一个随机的16B字符串**，如图下的2069be96201d963f
 
-<figure><img src="../../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
 
 **第7个包NTLMSSP\_ AUTH 即Type3**
 
-<figure><img src="../../.gitbook/assets/image (24).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (40).png" alt=""><figcaption></figcaption></figure>
 
 第7个包为NTLMSSP\_ AUTH 即Type 3 Authentication消息，用于客户端发送给服务端的认证的消息，此消息还包含客户端对Type 2质询消息的效应，表明客户端知道账户和密码，Type 3 Authentication消息还会指示身份验证的身份验证目标(域或服务器名字)和用户名，以及客户端工作站名，核心部分如下：
 
-<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
 
 Authentication消息中最主要的是**Response消息**，**Response消息是用服务器密码的NTLM Hash加密Challenge值后经过一系列运算得到的**，Response消息可以提出取**Net-NTLM Hash**，在Response消息中，分别有以下6种类型响应：
 
@@ -223,7 +223,7 @@ Authentication消息中最主要的是**Response消息**，**Response消息是�
 
 如图下，在Type 3消息数据包中Response消息中是NTLM v2的响应类型，且可以看到在NTLMv2 Response消息下的**NTProofStr**字段，该字段的值用做数据签名的Hash(**HMAC-MD5**)值，目的是保证数据的完整性
 
-<figure><img src="../../.gitbook/assets/image (41).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (15).png" alt=""><figcaption></figcaption></figure>
 
 对于NTLM v2 Hash 与 NTProofStr，计算公式为
 
@@ -240,13 +240,13 @@ MIC = HMAC_MD5(exportedSessionKey,NEGOTIATE_MESSAGE + CHALLENGE_MESSAGE + AUTHEN
 
 **第八个数据包为返回结果Session Setup Response即为认证成功**
 
-<figure><img src="../../.gitbook/assets/image (52).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (48).png" alt=""><figcaption></figcaption></figure>
 
 认证完成后，根据协商字段值来确定是否需要对后续数据包进行签名。
 
 在第七个数据包中的**Session Key**字段就是用于协商加密密钥的
 
-<figure><img src="../../.gitbook/assets/image (32).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (44).png" alt=""><figcaption></figcaption></figure>
 
 从Impacket中ntlm.py脚本来分析Session Key如何生成与发挥作用，定位到ntlm.py脚本中的generateEncryptedSessionKey函数，**Session Key**是由**keyExchangeKey**和**exportedSessionKey**经过一系列运算得到的
 
@@ -367,11 +367,11 @@ if __name__ == "__main__":
     print ("Response: "+Response)
 ```
 
-<figure><img src="../../.gitbook/assets/image (49).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (46).png" alt=""><figcaption></figcaption></figure>
 
 #### 域环境下的NTLM认证
 
-<figure><img src="../../.gitbook/assets/未命名文件 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/未命名文件 (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 1. 当客户端需要访问服务器某个服务时，就需要进行身份认证，于是在客户端输入服务器的用户名与密码进行验证之后，就会缓存服务器的密码NTLM Hash值，然后客户端会向服务端发送一个请求，该请求利用NTLM SSP生成NTLMSSP\_NEGOTIATE消息，也就是Type 1协商消息
 2. 服务端接收到客户端发送过来的Type 1消息后，读取其中内容，并从中选择自己能接受的服务内容、加密等级、安全服务等，然后传输给NTLM SSP，得到NTLMSSP\_CHALLENGE消息，也就是Type 2质询消息，并将Type 2消息发回给客户端。在Type 2 消息中包含一个服务端生成的16位随机值，被称为Challenge值，服务端会将该Challenge值进行缓存
@@ -388,7 +388,7 @@ if __name__ == "__main__":
 
 DC(DC-1)：10.10.10.11
 
-<figure><img src="../../.gitbook/assets/image (37).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (22).png" alt=""><figcaption></figcaption></figure>
 
 字段含义与工作组中字段含义一致，不过多详述
 
@@ -429,7 +429,7 @@ LmCompatibilityLevel值是可以手动设置的：
 
 * 通过本地安全策略设置(默认其值没有定义，无定义则使用默认值)：本地安全策略->安全设置->本地策略->安全选择->网络安全:LAN管理器身份验证
 
-<figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (49).png" alt=""><figcaption></figcaption></figure>
 
 * 通过注册表设置(默认没有lmcompatibilitylevel字段)：计算机\HKEY\_LOCAL\_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa\lmcompatibilitylevel，可通过新建lmcompatibilitylevel字段(REG\_DOWRD)填入数字0-5设置LmCompatibilityLevel值
 

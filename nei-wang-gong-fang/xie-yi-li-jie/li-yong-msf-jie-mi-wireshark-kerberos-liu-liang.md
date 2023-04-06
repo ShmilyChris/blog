@@ -22,9 +22,9 @@ NTDS.dit：文件属于ESE (Extensible Storage Engine, 可扩展存储引擎) �
 
 其中auxiliary/gather/windows\_secrets\_dump模块可以借助SMB帮助我们一键远程提取计算机帐户中NT HASH，如下图
 
-<figure><img src="../../.gitbook/assets/image (26).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (53).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (51).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (20).png" alt=""><figcaption></figcaption></figure>
 
 归功于MSF拥有强大的数据库功能，auxiliary/gather/windows\_secrets\_dump模块的运行结束支持入库，那么我们就可以利用auxiliary/gather/windows\_secrets\_dump配合auxiliary/admin/kerberos/keytab模块，一键导出DC上的所有账户的keytab
 
@@ -55,7 +55,7 @@ set smbpass xxx
 run
 ```
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
 
 原地切换auxiliary/admin/kerberos/keytab模块导出kt
 
@@ -63,12 +63,12 @@ run
 <strong>run action=EXPORT keytab_file=./1.keytab
 </strong></code></pre>
 
-<figure><img src="../../.gitbook/assets/image (29).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (57).png" alt=""><figcaption></figcaption></figure>
 
 将导出的kt证书导入到wireshark中：编辑->首选项->Protocols->KRB5
 
-<figure><img src="../../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (24).png" alt=""><figcaption></figcaption></figure>
 
 如果解密成功, 就会是显示蓝色, 不成功就是黄色
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (54).png" alt=""><figcaption></figcaption></figure>

@@ -8,4 +8,4 @@ description: 需要的师傅可以自取，也欢迎各位师傅联系我补充�
 内网权限维持
 {% endfile %}
 
-<figure><img src="../../.gitbook/assets/1 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/1.png" alt=""><figcaption></figcaption></figure>

@@ -12,13 +12,13 @@ Kerberos协议是由**MIT**提出的一种**网络身份验证协议**，是一�
 
 关于**kebtgt账户**，该用户是在**创建活动目录**时系统**自动创建**的一个账户，其作用是**KDC的服务账户**，其密码**由系统随机生成**，为**无法登录**的主机。
 
-<figure><img src="../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (47).png" alt=""><figcaption></figcaption></figure>
 
 Kerberos是一种**基于票据(Ticket)**的认证方式，客户端想要**访问服务端的某个服务**，首**先需要购买服务端认可的ST**(Service Ticket，**服务票据**)。也就是说，**客户端**在**访问服务**之前需要**先购好票**，等待服务验票之后才能访问。但这**票并不能直接购买**，而是**需要一张TGT**(Ticket Granting Ticket，**认购认证**)。也就是说**获取ST之前需要先获取一张TGT**。**ST与TGT均由KDC发放**，而因为KDC运行在域控上，又可以说成均由域控发放。
 
 Kerberos使用TCP/UPD **88端口进行认证**，使用TCP/UDP **464端口进行密码重置**
 
-<figure><img src="../../.gitbook/assets/image (54).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (43).png" alt=""><figcaption></figcaption></figure>
 
 ## PAC
 
@@ -165,7 +165,7 @@ typedef struct _PAC_SIGNATURE_DATA {
 
 
 
-    <figure><img src="../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (39).png" alt=""><figcaption></figcaption></figure>
 
 对于验证KDC PAC签名这个注册表键值，有以下几点注意事项：
 
@@ -183,7 +183,7 @@ typedef struct _PAC_SIGNATURE_DATA {
 
 如图所示， 在没有PAC的情况下，Server与KDC之间必须进行用户授权信息的查询与返回 ：
 
-<figure><img src="../../.gitbook/assets/未命名文件 (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/未命名文件 (2).png" alt=""><figcaption></figcaption></figure>
 
 当引入PAC之后则变成了如图所示：
 
@@ -205,7 +205,7 @@ KDC(DC-1)：10.10.10.11
 
 数据包如下：
 
-<figure><img src="../../.gitbook/assets/image (17).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (31).png" alt=""><figcaption></figcaption></figure>
 
 ### AS-REQ\&AS-REP
 
@@ -213,7 +213,7 @@ KDC(DC-1)：10.10.10.11
 
 当域内某个用户想要域内访问某个服务时，输入用户名和密码，本机就会向**KDC的AS**，**发送**一个**AS-REQ(认证请求)**，请求完整数据包如下：
 
-<figure><img src="../../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
 
 **AS-REQ请求包包含关键信息**：
 
@@ -270,7 +270,7 @@ if isinstance(nthash, bytes) and nthash != b'':
 
 patimestamp和pausec为解密后的值，解密内容如下：
 
-<figure><img src="../../.gitbook/assets/image (43).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
 
 
 
@@ -278,7 +278,7 @@ patimestamp和pausec为解密后的值，解密内容如下：
 
 当KDC的AS**接收**到客户端发来的**AS-REQ后**，AS会**从活动目录数据库**中**提取出该用户的密钥**，然后使用该密钥对请求包中的**预认证部分进行解密**，解密成功且时间戳在有效范围内，则证明请求者提供的用户密钥正确，完整的数据包如下：
 
-<figure><img src="../../.gitbook/assets/image (21).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (32).png" alt=""><figcaption></figcaption></figure>
 
 **AS-REP请求包包含关键信息**：
 
@@ -305,13 +305,13 @@ patimestamp和pausec为解密后的值，解密内容如下：
 
 
 
-    <figure><img src="../../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (21).png" alt=""><figcaption></figcaption></figure>
 
     TGT下**authorization-data**字段下代表用户身份权限的PAC解密包如下，主要还是通过**User RID**和**Group RID**来辨别用户权限的
 
 
 
-    <figure><img src="../../.gitbook/assets/image (22).png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (56).png" alt=""><figcaption></figcaption></figure>
 
     **KDC生成PAC的过程如下：**KDC在收到客户端发来的AS-REQ后，从请求中**取出cname**字段，然后**查询活动目录数据库**，找到sAMAccountName属性为cname字段的值的用户，用该用户的身份生成一个对应的PAC
 2.  **Logon Session Key：**AS-REP包中最外层的部分就是加密的Logon Session Key，用于确保客户端和KDC一阶段的通信安全，使用请求的用户密钥加密，解密内容如下：
